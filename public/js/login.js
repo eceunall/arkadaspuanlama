@@ -7,16 +7,17 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
+// Statik dosyaları servis et
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// Login sayfası
+// Giriş sayfası
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-// Ana sayfa (başarılı girişten sonra)
-app.get("/main", (req, res) => {
+// Ana sayfa (giriş sonrası yönlendirme buraya olur)
+app.get("/main.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });
 
@@ -27,7 +28,8 @@ app.post("/login", (req, res) => {
   const validPassword = process.env.LOGIN_PASSWORD;
 
   if (username === validUsername && password === validPassword) {
-    res.redirect("/main");
+    // Giriş başarılıysa main.html sayfasına yönlendir
+    res.redirect("/main.html");
   } else {
     res.send(`
       <h2 style="color:red;">Kullanıcı adı veya şifre hatalı!</h2>
@@ -36,6 +38,7 @@ app.post("/login", (req, res) => {
   }
 });
 
+// Sunucuyu başlat
 app.listen(PORT, () => {
-  console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor`);
+  console.log(`✅ Sunucu çalışıyor: http://localhost:${PORT}`);
 });

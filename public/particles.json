@@ -12,6 +12,9 @@
       "opacity": 0.4,
       "width": 1
     },
-    "move": { "enable": true, "speed": 2 }
+    "move": {
+      "enable": true,
+      "speed": 0.6   
+    }
   }
 }

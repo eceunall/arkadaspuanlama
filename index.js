@@ -5,36 +5,36 @@ const bodyParser = require("body-parser");
 
 dotenv.config();
 const app = express();
+const PORT = 3000;
 
-// Public klasörü ayarı
-app.use(express.static('public'));
-app.use(express.static(path.join(__dirname, 'public')));
+// Public klasörü (statik dosyalar için)
+app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // Giriş sayfası
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'login.html'));
+  res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
 // Giriş işlemi
 app.post("/login", (req, res) => {
-    const enteredPassword = req.body.password;
+  const { username, password } = req.body;
+  const validUsername = process.env.LOGIN_USERNAME;
+  const validPassword = process.env.LOGIN_PASSWORD;
 
-    if (enteredPassword === process.env.LOGIN_PASSWORD) {
-        res.send("<h2>Giriş başarılı!</h2> <a href='/'>Anasayfa</a>");
-    } else {
-        res.send("<h2 style='color:red'>Hatalı şifre!</h2> <a href='/'>Tekrar dene</a>");
-    }
+  if (username === validUsername && password === validPassword) {
+    res.redirect("/main.html"); // Başarılıysa anasayfa
+  } else {
+    res.send(`<h2 style="color:red;">Hatalı kullanıcı adı veya şifre!</h2><a href="/">Geri dön</a>`);
+  }
 });
 
-// Ürün rotaları
-app.get("/products/:id", (req, res) => {
-    res.send("products details: " + req.params.id);
-});
-app.get("/products", (req, res) => {
-    res.send("products");
+// Ana sayfa (main.html)
+app.get("/main.html", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "main.html"));
 });
 
-app.listen(3000, () => {
-    console.log("listening on port 3000");
+// Sunucuyu başlat
+app.listen(PORT, () => {
+  console.log(`Sunucu http://localhost:${PORT} adresinde çalışıyor`);
 });

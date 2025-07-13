@@ -1,0 +1,158 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding-top: 80px;
+  overflow-x: hidden;
+  color: #ffffff;
+  background-color: transparent;
+  background-image: linear-gradient(to bottom right, #0f172a, #1e293b);
+  position: relative;
+}
+
+/* Hareketli Arka Plan */
+#particles-js {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -10;
+  background: linear-gradient(to bottom right, #0f172a, #1e293b);
+}
+
+/* HEADER */
+.header-wave {
+  padding-top: 40px;
+  background: rgba(0, 98, 230, 0.25);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.header-wave h1 {
+  color: #ffffff;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0;
+}
+
+.header-wave svg {
+  display: block;
+  width: 100%;
+  height: 80px;
+  margin-top: -10px;
+}
+
+/* Admin Kartı */
+.admin-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  color: #000;
+}
+
+.admin-card .card-body {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.admin-card .card-body > div {
+  flex: 1;
+}
+
+.admin-card p {
+  margin: 6px 0;
+  padding: 8px 16px;
+  border-radius: 50px;
+  background: linear-gradient(to right, rgba(0, 98, 230, 0.2), rgba(0, 98, 230, 0.1));
+  font-size: 0.9rem;
+  width: 100%;
+  display: block;
+  box-sizing: border-box;
+}
+
+/* Arkadaşlar Butonu */
+#toggleFriends {
+  display: block;
+  width: 100%;
+  max-width: 90%;
+  margin: 10px auto;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 40px;
+  background: linear-gradient(to right, #0062E6, #33AEFF);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+#toggleFriends:hover {
+  transform: scale(1.03);
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* Arkadaş Kartları */
+#friendList .card {
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  transition: transform 0.2s;
+}
+
+#friendList .card:hover {
+  transform: scale(1.03);
+}
+
+/* Yıldız kutusu */
+.star-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 60px;
+}
+
+/* Yıldız kendisi */
+.big-star-icon {
+  font-size: 140px;
+  color: gold;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 1);
+  animation: spinStar 35s linear infinite;
+}
+
+/* Yıldız yazısı */
+.star-label {
+  margin-top: 15px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: rgba(255, 215, 0, 1);
+  opacity: 0.4;
+}
+
+/* Dönme efekti */
+@keyframes spinStar {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+#center-panel {
+  min-height: 400px; /* Sabit bir yükseklik ver, yıldız sarsılmaz */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Ekstra taşmayı engelle */
+}

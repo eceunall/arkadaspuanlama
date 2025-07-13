@@ -13,11 +13,10 @@ body {
   background: linear-gradient(to bottom right, #0f172a, #1e293b);
 }
 
-/* ⬇️ HEADER (dalgalı ve saydam) */
 .header-wave {
   padding-top: 40px;
-  background: rgba(0, 98, 230, 0.25); /* saydam mavi */
-  backdrop-filter: blur(10px);       /* cam efekti */
+  background: rgba(0, 98, 230, 0.25);
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   position: relative;
   z-index: 2;
@@ -31,7 +30,6 @@ body {
   margin-bottom: 0;
 }
 
-/* ⬇️ SVG dalga (aşağı doğru geçiş) */
 .header-wave svg {
   display: block;
   width: 100%;
@@ -39,7 +37,6 @@ body {
   margin-top: -10px;
 }
 
-/* ⬇️ Giriş Kutusu */
 .login-box {
   max-width: 400px;
   width: 90%;
