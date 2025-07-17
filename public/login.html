@@ -34,12 +34,18 @@
 
   <!-- Login Kutusu -->
   <main class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
-    <form action="/login" method="POST" class="login-box p-5 text-center">
-      <h4 class="mb-4 text-dark">Giriş Yap</h4>
-      <input type="text" name="username" class="form-control mb-3" placeholder="Kullanıcı adı" required>
-      <input type="password" name="password" class="form-control mb-4" placeholder="Şifre" required>
-      <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
-    </form>
+    <form action="/login" method="POST" class="login-box p-5 text-center" id="loginForm">
+  <h4 class="mb-4 text-dark">Giriş Yap</h4>
+  <input type="text" name="username" class="form-control mb-3" placeholder="Kullanıcı adı" required>
+  <input type="password" name="password" class="form-control mb-4" placeholder="Şifre" required>
+  <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+
+  <!-- Hata mesajı -->
+  <div id="errorMessage" class="mt-3 text-danger fw-bold" style="display: none;">
+    Hatalı girdiniz, tekrar deneyin.
+  </div>
+</form>
+
   </main>
 
   <!-- JS -->

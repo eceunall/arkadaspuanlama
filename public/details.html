@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Arkadaş Detayları</title>
+  <link rel="stylesheet" href="/css/login.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div id="particles-js"></div>
+
+  <header class="header-wave text-white text-center">
+    <h1 class="fw-bold">KİŞİ DETAYLARI</h1>
+    <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+      <path fill="url(#grad1)" fill-opacity="0.3" d="M0,96L60,112C120,128,240,160,360,149.3C480,139,600,85,720,64C840,43,960,53,1080,74.7C1200,96,1320,128,1380,144L1440,160L1440,0L0,0Z"></path>
+      <defs>
+        <linearGradient id="grad1" x1="0" x2="1" y1="0" y2="0">
+          <stop offset="0%" stop-color="#0062E6" />
+          <stop offset="100%" stop-color="#33AEFF" />
+        </linearGradient>
+      </defs>
+    </svg>
+  </header>
+
+  <main class="container py-5">
+    <div id="detailCard" class="login-box p-4">
+      <h4 class="mb-3 text-dark fw-bold" id="nameTitle">Ad Soyad</h4>
+      <p><strong>📧 E-Posta:</strong> <span id="emailText"></span></p>
+      <p><strong>📱 Telefon:</strong> <span id="phoneText"></span></p>
+      <div id="friendListSection" class="mt-4">
+        <h6 class="fw-bold">Arkadaşlıklar:</h6>
+        <ul id="friendsUl" class="ps-3"></ul>
+      </div>
+
+      <div class="mt-4 d-flex justify-content-between">
+        <a href="/list.html" class="btn btn-outline-secondary">← Geri Dön</a>
+        <div>
+          <button class="btn btn-danger me-2" onclick="deleteFriend()">🗑 Sil</button>
+          <button class="btn btn-warning" onclick="editFriend()">✏ Güncelle</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script src="/js/particles.min.js"></script>
+  <script>
+    particlesJS.load('particles-js', '/particles.json');
+
+    const params = new URLSearchParams(window.location.search);
+    const targetId = params.get("id");
+    let currentData = {};
+
+    fetch("/api/friends")
+      .then(res => res.json())
+      .then(data => {
+        const person = data.find(p => p.id == targetId);
+        if (!person) {
+          document.getElementById("detailCard").innerHTML = "<p>Kişi bulunamadı.</p>";
+          return;
+        }
+
+        currentData = person;
+        document.getElementById("nameTitle").textContent = person.name;
+        document.getElementById("emailText").textContent = person.email;
+        document.getElementById("phoneText").textContent = person.phone;
+
+        const friends = person.friends?.split("|") || [];
+        const ul = document.getElementById("friendsUl");
+        if (friends.length === 0 || !friends[0]) {
+          ul.innerHTML = "<li>Ekli arkadaş yok</li>";
+        } else {
+          friends.forEach(item => {
+            const [name, score] = item.split(":");
+            const li = document.createElement("li");
+            li.textContent = `${name} (${score}/10)`;
+            ul.appendChild(li);
+          });
+        }
+      });
+
+    // ✅ Doğru endpoint: /api/friends/:id
+    function deleteFriend() {
+      fetch(`/api/friends/${targetId}`, {
+        method: "DELETE"
+      }).then(res => {
+        if (res.ok) {
+          alert("Kişi silindi.");
+          window.location.href = "/list.html";
+        } else {
+          alert("Silme işlemi başarısız.");
+        }
+      });
+    }
+
+    // ✅ Güncelleme işlemi
+    function editFriend() {
+      const formHtml = `
+        <hr />
+        <h5 class="mt-4">Düzenleme</h5>
+        <input class="form-control mb-2" id="editName" value="${currentData.name}" />
+        <input class="form-control mb-2" id="editEmail" value="${currentData.email}" />
+        <input class="form-control mb-2" id="editPhone" value="${currentData.phone}" />
+        <input class="form-control mb-2" id="editFriends" value="${currentData.friends || ''}" />
+        <button class="btn btn-success w-100" onclick="saveUpdate()">💾 Kaydet</button>
+      `;
+      document.getElementById("detailCard").insertAdjacentHTML("beforeend", formHtml);
+    }
+
+    function saveUpdate() {
+      const updated = {
+        name: document.getElementById("editName").value,
+        email: document.getElementById("editEmail").value,
+        phone: document.getElementById("editPhone").value,
+        friends: document.getElementById("editFriends").value
+      };
+
+      // ✅ Doğru endpoint: /api/friends/:id
+      fetch(`/api/friends/${targetId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(updated)
+      }).then(res => {
+        if (res.ok) {
+          alert("Güncelleme başarılı.");
+          window.location.href = "/list.html";
+        } else {
+          alert("Güncelleme başarısız.");
+        }
+      });
+    }
+  </script>
+</body>
+</html>

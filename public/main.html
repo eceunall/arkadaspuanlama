@@ -40,7 +40,7 @@
       <!-- SOL PANEL -->
       <div class="col-md-3" id="left-panel">
 
-        <!-- Admin Kartı -->
+        <!-- Admin Kartı + İlişkiler -->
         <div class="card bg-white text-dark mb-4 shadow-sm admin-card">
           <div class="card-body d-flex align-items-center">
             <img src="/images/ece.jpg" class="rounded-circle me-3" width="60" height="60" alt="Profil Foto">
@@ -49,6 +49,13 @@
               <p class="mb-0"><small>ece@gmail.com</small></p>
               <p class="mb-0"><small>0555 555 5555</small></p>
             </div>
+          </div>
+          <hr>
+          <div class="px-3 pb-3">
+           
+            <ul class="list-group list-group-flush small" id="adminFriendList">
+              <!-- Dinamik olarak JS ile dolacak -->
+            </ul>
           </div>
         </div>
 
@@ -61,33 +68,30 @@
         </div>
 
         <!-- Açılır arkadaş kartları listesi -->
-        <div id="friendList" class="row g-2 collapse">
-          <div class="col-6">
-            <div class="card bg-light text-dark text-center shadow-sm">
-              <div class="card-body p-2">
-                <h6 class="card-title mb-1">ECE</h6>
-                <small>7/10</small>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-<!-- ORTA PANEL -->
-<div class="col-md-6 d-flex justify-content-center align-items-center flex-column" id="center-panel">
-  <a href="/stats.html" class="star-wrapper text-decoration-none">
-    <i class="fas fa-star big-star-icon"></i>
-    <div class="star-label">EN SOSYAL KİŞİ</div>
-  </a>
+            <div id="friendList" class="row g-2 collapse">
+          <!-- JavaScript ile dinamik olarak doldurulacak -->
 </div>
 
 
+      </div>
 
+      <!-- ORTA PANEL -->
+      <div class="col-md-6 d-flex justify-content-center align-items-center flex-column" id="center-panel">
+        <a href="/stats.html" class="star-wrapper text-decoration-none">
+          <i class="fas fa-star big-star-icon"></i>
+          <div class="star-label">EN GÜÇLÜ SOSYAL SKOR</div>
+        </a>
+      </div>
 
-      <!-- SAĞ PANEL -->
-      <div class="col-md-3" id="right-panel">
-        <!-- Menü işlemleri buraya eklenecek -->
+      <!-- SAĞ PANEL (İŞLEMLER MENÜSÜ) -->
+      <div class="col-md-3 d-flex flex-column align-items-start mt-4 px-3">
+        <div class="actions-box w-100 p-4 rounded shadow">
+          <h5 class="text-white fw-bold mb-3">İŞLEMLER</h5>
+          <a href="list.html" class="btn btn-outline-info w-100 mb-2">Tüm Kişileri Listele</a>
+          <a href="add.html" class="btn btn-outline-success w-100 mb-2">Arkadaş Ekle</a>
+          <a href="list.html?action=delete" class="btn btn-outline-danger w-100 mb-2">Arkadaş Sil</a>
+          <a href="list.html?action=edit" class="btn btn-outline-warning w-100">Bilgileri Güncelle</a>
+        </div>
       </div>
 
     </div>
@@ -96,7 +100,7 @@
   <!-- JS -->
   <script src="/js/particles.min.js"></script>
   <script>
-    particlesJS.load('particles-js', '/particles.json', function() {
+    particlesJS.load('particles-js', '/particles.json', function () {
       console.log('particles.js yüklendi!');
     });
   </script>

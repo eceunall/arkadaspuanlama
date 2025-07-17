@@ -1,0 +1,30 @@
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to right, #ece9e6, #ffffff);
+  margin: 0;
+  padding: 0;
+}
+
+.header-wave {
+  background: linear-gradient(to right, #10b981, #3b82f6);
+  padding-top: 30px;
+  padding-bottom: 0;
+  position: relative;
+  z-index: 1;
+}
+
+.friend-card {
+  border-radius: 12px;
+  transition: transform 0.2s ease-in-out;
+  background-color: #f8fcff; /* açık mavi ton */
+}
+
+.friend-card:hover {
+  transform: scale(1.03);
+  background-color: #e7f4ff;
+}
+
+
+.friend-card .btn {
+  font-size: 0.85rem;
+}

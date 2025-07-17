@@ -1,7 +1,6 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-const bodyParser = require("body-parser");
 
 dotenv.config();
 const app = express();
@@ -9,32 +8,29 @@ const PORT = 3000;
 
 // Statik dosyaları servis et
 app.use(express.static(path.join(__dirname, "public")));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Giriş sayfası
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-// Ana sayfa (giriş sonrası yönlendirme buraya olur)
+// Ana sayfa
 app.get("/main.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });
 
-// Login işlemi
+// Login işlemi (JSON yanıt döner)
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   const validUsername = process.env.LOGIN_USERNAME;
   const validPassword = process.env.LOGIN_PASSWORD;
 
   if (username === validUsername && password === validPassword) {
-    // Giriş başarılıysa main.html sayfasına yönlendir
-    res.redirect("/main.html");
+    res.json({ success: true });
   } else {
-    res.send(`
-      <h2 style="color:red;">Kullanıcı adı veya şifre hatalı!</h2>
-      <a href="/">Tekrar dene</a>
-    `);
+    res.json({ success: false });
   }
 });
 
