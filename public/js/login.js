@@ -6,22 +6,21 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-// Statik dosyaları servis et
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Giriş sayfası
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
 
-// Ana sayfa
+
 app.get("/main.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });
 
-// Login işlemi (JSON yanıt döner)
+// Login işlemi
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   const validUsername = process.env.LOGIN_USERNAME;
@@ -34,7 +33,7 @@ app.post("/login", (req, res) => {
   }
 });
 
-// Sunucuyu başlat
+
 app.listen(PORT, () => {
   console.log(`✅ Sunucu çalışıyor: http://localhost:${PORT}`);
 });

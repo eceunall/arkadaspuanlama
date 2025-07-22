@@ -19,11 +19,11 @@ fetch("/api/friends")
       });
     });
 
-    // 🔝 En yüksek ortalamalı kişi
+    // En yüksek ortalamalı kişi
     const sorted = averages.sort((a, b) => b.average - a.average);
     document.getElementById("mostSocial").textContent = sorted[0]?.name || "Veri bulunamadı";
 
-    // 📋 Listele
+    //  Listele
     const ul = document.getElementById("rankingList");
     sorted.forEach(p => {
       const li = document.createElement("li");

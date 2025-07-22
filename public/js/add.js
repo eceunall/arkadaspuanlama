@@ -4,7 +4,7 @@ document.getElementById("addFriendForm").addEventListener("submit", async functi
   const form = e.target;
   const formData = new FormData(form);
 
-  // friends kolonunu oluştur
+  
   const friendNames = formData.getAll("friendNames[]");
   const friendScores = formData.getAll("friendScores[]");
 

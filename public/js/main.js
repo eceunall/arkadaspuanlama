@@ -7,14 +7,14 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleBtn.addEventListener("click", () => {
       const isOpen = friendList.classList.contains("show");
 
-      // Aç kapa
+     
       friendList.classList.toggle("show");
 
-      // İkon yönünü değiştir
+      
       arrowIcon.classList.toggle("fa-chevron-down", isOpen);
       arrowIcon.classList.toggle("fa-chevron-up", !isOpen);
 
-      // Eğer listeyi açıyorsak adminin arkadaşlarını yükle
+   
       if (!isOpen && friendList.children.length <= 1) {
         fetch("/api/friends")
           .then(res => res.json())

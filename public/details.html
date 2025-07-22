@@ -80,7 +80,7 @@
         }
       });
 
-    // ✅ Doğru endpoint: /api/friends/:id
+    
     function deleteFriend() {
       fetch(`/api/friends/${targetId}`, {
         method: "DELETE"
@@ -94,7 +94,7 @@
       });
     }
 
-    // ✅ Güncelleme işlemi
+    //  Güncelleme işlemi
     function editFriend() {
       const formHtml = `
         <hr />
@@ -116,7 +116,7 @@
         friends: document.getElementById("editFriends").value
       };
 
-      // ✅ Doğru endpoint: /api/friends/:id
+      
       fetch(`/api/friends/${targetId}`, {
         method: "PUT",
         headers: {

@@ -9,15 +9,14 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-// 📁 CSV dosya yolu
+
 const csvPath = path.join(__dirname, "public", "data", "friends.csv");
 
-// 📦 Middleware
+
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
-// 🌐 Sayfalar
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
@@ -26,7 +25,7 @@ app.get("/main.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });
 
-// ✅ Giriş işlemi
+
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
   const validUsername = process.env.LOGIN_USERNAME;
@@ -39,7 +38,7 @@ app.post("/login", (req, res) => {
   }
 });
 
-// ✅ API: Tüm arkadaşları getir
+// API: Tüm arkadaşları getir
 app.get("/api/friends", (req, res) => {
   const results = [];
   fs.createReadStream(csvPath)
@@ -52,7 +51,7 @@ app.get("/api/friends", (req, res) => {
     });
 });
 
-// ✅ API: Yeni arkadaş ekle
+// API: Yeni arkadaş ekle
 app.post("/api/add-friend", (req, res) => {
   const { name, email, phone, friends } = req.body;
 
@@ -78,7 +77,7 @@ app.post("/api/add-friend", (req, res) => {
   });
 });
 
-// ✅ API: Arkadaş sil
+// API: Arkadaş sil
 app.delete("/api/friends/:id", (req, res) => {
   const targetId = req.params.id;
   const lines = fs.readFileSync(csvPath, "utf-8").trim().split("\n");
@@ -99,7 +98,7 @@ app.delete("/api/friends/:id", (req, res) => {
   });
 });
 
-// ✅ API: Arkadaş güncelle (geliştirilmiş)
+// API: Arkadaş güncelle 
 app.put("/api/friends/:id", (req, res) => {
   const { name, email, phone, friends } = req.body;
   const targetId = req.params.id;
@@ -112,7 +111,7 @@ app.put("/api/friends/:id", (req, res) => {
 
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
-    const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g); // güvenli split
+    const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g); 
     if (!parts || parts.length < 5) continue;
 
     const id = parts[0];
@@ -139,7 +138,7 @@ app.put("/api/friends/:id", (req, res) => {
 });
 
 
-// 🟢 Sunucu başlat
+
 app.listen(PORT, () => {
   console.log(`✅ Sunucu http://localhost:${PORT} adresinde çalışıyor`);
 });

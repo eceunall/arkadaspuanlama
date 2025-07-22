@@ -16,7 +16,7 @@ body {
 .friend-card {
   border-radius: 12px;
   transition: transform 0.2s ease-in-out;
-  background-color: #f8fcff; /* açık mavi ton */
+  background-color: #f8fcff;
 }
 
 .friend-card:hover {
