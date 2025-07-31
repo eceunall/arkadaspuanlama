@@ -9,14 +9,13 @@ dotenv.config();
 const app = express();
 const PORT = 3000;
 
-
 const csvPath = path.join(__dirname, "public", "data", "friends.csv");
-
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 
+// Giriş sayfası
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "login.html"));
 });
@@ -24,7 +23,6 @@ app.get("/", (req, res) => {
 app.get("/main.html", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "main.html"));
 });
-
 
 app.post("/login", (req, res) => {
   const { username, password } = req.body;
@@ -38,7 +36,7 @@ app.post("/login", (req, res) => {
   }
 });
 
-// API: Tüm arkadaşları getir
+// ✅ API: Tüm arkadaşları getir
 app.get("/api/friends", (req, res) => {
   const results = [];
   fs.createReadStream(csvPath)
@@ -51,9 +49,30 @@ app.get("/api/friends", (req, res) => {
     });
 });
 
-// API: Yeni arkadaş ekle
+// ✅ API: Yeni arkadaş ekle (Test uyumlu)
 app.post("/api/add-friend", (req, res) => {
   const { name, email, phone, friends } = req.body;
+
+  if (!name || !email || !phone) {
+    return res.status(400).json({ success: false, message: "Zorunlu alanlar eksik" });
+  }
+
+  // E-posta format kontrolü
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRegex.test(email)) {
+    return res.status(400).json({ success: false, message: "Geçersiz e-posta formatı" });
+  }
+
+  // Puan kontrolleri
+  if (friends) {
+    const score = Number(friends);
+    if (isNaN(score)) {
+      return res.status(400).json({ success: false, message: "Puan sayı olmalı" });
+    }
+    if (score < 0 || score > 10) {
+      return res.status(400).json({ success: false, message: "Puan 0 ile 10 arasında olmalı" });
+    }
+  }
 
   const fileContent = fs.readFileSync(csvPath, "utf-8").trim();
   const lines = fileContent.split("\n");
@@ -64,8 +83,8 @@ app.post("/api/add-friend", (req, res) => {
     const id = parseInt(line.split(",")[0]);
     if (!isNaN(id) && id > maxId) maxId = id;
   });
-  const newId = maxId + 1;
 
+  const newId = maxId + 1;
   const newLine = `${newId},${name},${email},${phone},"${friends || ""}"`;
 
   fs.appendFile(csvPath, "\n" + newLine, (err) => {
@@ -77,7 +96,7 @@ app.post("/api/add-friend", (req, res) => {
   });
 });
 
-// API: Arkadaş sil
+// ✅ API: Arkadaş sil
 app.delete("/api/friends/:id", (req, res) => {
   const targetId = req.params.id;
   const lines = fs.readFileSync(csvPath, "utf-8").trim().split("\n");
@@ -98,7 +117,7 @@ app.delete("/api/friends/:id", (req, res) => {
   });
 });
 
-// API: Arkadaş güncelle 
+// ✅ API: Arkadaş güncelle
 app.put("/api/friends/:id", (req, res) => {
   const { name, email, phone, friends } = req.body;
   const targetId = req.params.id;
@@ -111,7 +130,7 @@ app.put("/api/friends/:id", (req, res) => {
 
   for (let i = 1; i < lines.length; i++) {
     const line = lines[i];
-    const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g); 
+    const parts = line.match(/(".*?"|[^",\s]+)(?=\s*,|\s*$)/g);
     if (!parts || parts.length < 5) continue;
 
     const id = parts[0];
@@ -137,8 +156,11 @@ app.put("/api/friends/:id", (req, res) => {
   });
 });
 
+// Sunucu başlat (test uyumlu)
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`✅ Sunucu http://localhost:${PORT} adresinde çalışıyor`);
+  });
+}
 
-
-app.listen(PORT, () => {
-  console.log(`✅ Sunucu http://localhost:${PORT} adresinde çalışıyor`);
-});
+module.exports = app;
